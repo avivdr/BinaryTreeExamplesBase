@@ -188,7 +188,19 @@ namespace BinaryTreeExamples
         /// עמ 176 שאלה 9 מהספר
         /// </summary>
         /// <param name="root"></param>
-        
+        public static void IncrementCharValues(BinNode<char> root)
+        {
+            if (root == null) return;
+
+            root.SetValue(IncrementLetter(root.GetValue()));
+            IncrementCharValues(root.GetLeft());
+            IncrementCharValues(root.GetRight());
+        }
+
+        public static char IncrementLetter(char ch)
+        {
+            return (char)((ch + 1 - 'a') % ('z' -'a') + 'a');
+        }
 
         /// <summary>
         /// תרגיל 14
@@ -196,7 +208,12 @@ namespace BinaryTreeExamples
         /// <typeparam name="T"></typeparam>
         /// <param name="root"></param>
         /// <returns></returns>
-
+        public static int CountLeavesInTree<T>(BinNode<T> root)
+        {
+            if (root == null) return 0;
+            if (IsLeaf(root)) return 1;
+            return CountLeavesInTree(root.GetLeft()) + CountLeavesInTree(root.GetRight());
+        }
 
         /// <summary>
         /// שאלה 12
