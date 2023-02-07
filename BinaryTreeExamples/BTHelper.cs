@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using DataStructureCore;
 
 namespace BinaryTreeExamples
@@ -80,8 +81,11 @@ namespace BinaryTreeExamples
         /// <param name="root"></param>
         public static void PrintPreOrder<T>(BinNode<T> root)
         {
-         
+            if (root == null) return;
 
+            Console.WriteLine(root.GetValue());
+            PrintPreOrder(root.GetLeft());
+            PrintPreOrder(root.GetRight());
         }
         #endregion
 
@@ -93,8 +97,11 @@ namespace BinaryTreeExamples
         /// <param name="root"></param>
         public static void PrintInOrder<T>(BinNode<T> root)
         {
-           
+            if (root == null) return;
 
+            PrintPreOrder(root.GetLeft());
+            Console.WriteLine(root.GetValue());
+            PrintPreOrder(root.GetRight());
         }
         #endregion
 
@@ -106,8 +113,11 @@ namespace BinaryTreeExamples
         /// <param name="root"></param>
         public static void PrintPostOrder<T>(BinNode<T> root)
         {
-           
+            if (root == null) return;
 
+            PrintPreOrder(root.GetLeft());
+            PrintPreOrder(root.GetRight());
+            Console.WriteLine(root.GetValue());
         }
         #endregion
         #endregion
@@ -121,7 +131,12 @@ namespace BinaryTreeExamples
         /// <typeparam name="T"></typeparam>
         /// <param name="root"></param>
         /// <returns>אמת אם עלה ושקר אחרת</returns>
-      
+        public static bool IsLeaf<T>(BinNode<T> root)
+        {
+            if (root == null) return false;
+            return !root.HasLeft() && !root.HasRight();
+        }
+
         #endregion
 
 
@@ -136,25 +151,44 @@ namespace BinaryTreeExamples
         /// <typeparam name="T"></typeparam>
         /// <param name="root"></param>
         /// <returns></returns>
-     
+        public static int CountTreeNodes<T>(BinNode<T> root)
+        {
+            if (root == null) return 0;
+            return 1 + CountTreeNodes(root.GetLeft()) + CountTreeNodes(root.GetRight());
+        }
+
         #endregion
 
         #region האם ערך קיים בעץ
-       
+
+
+
+        public static bool IsExistsInTree<T>(BinNode<T> root, T val)
+        {
+            if (root == null) return false;
+
+            return root.GetValue().Equals(val) || IsExistsInTree(root.GetLeft(), val) || IsExistsInTree(root.GetRight(), val);
+        }
         #endregion
+
         /// <summary>
         /// 
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="root"></param>
         /// <returns></returns>
-        
+        public static bool IsEachTwoChildren<T>(BinNode<T> root)
+        {
+            if (root == null) return false;
+
+            return IsLeaf(root) || (root.HasLeft() && root.HasRight());
+        }
 
         /// <summary>
         /// עמ 176 שאלה 9 מהספר
         /// </summary>
         /// <param name="root"></param>
-      
+        
 
         /// <summary>
         /// תרגיל 14
@@ -163,13 +197,13 @@ namespace BinaryTreeExamples
         /// <param name="root"></param>
         /// <returns></returns>
 
-       
+
         /// <summary>
         /// שאלה 12
         /// </summary>
         /// <param name="root"></param>
         /// <returns></returns>
-        
+
         #endregion
 
 
@@ -182,7 +216,7 @@ namespace BinaryTreeExamples
         /// <typeparam name="T"></typeparam>
         /// <param name="root"></param>
         /// <returns></returns>
-      
+
         #endregion
 
         #region הדפסת רמה בעץ
@@ -194,7 +228,7 @@ namespace BinaryTreeExamples
         /// <typeparam name="T"></typeparam>
         /// <param name="root"></param>
         /// <param name="targetLevel"></param>
-     
+
         #endregion
 
         #region פעולת ההדפסה
@@ -205,7 +239,7 @@ namespace BinaryTreeExamples
         /// <param name="root"></param>
         /// <param name="targetLevel">הרמה שנרצה להדפיס</param>
         /// <param name="currentLevel">הרמה הנוכחית שאליה הגענו בסריקה</param>
-      
+
         #endregion
         #endregion
 
@@ -232,7 +266,7 @@ namespace BinaryTreeExamples
         /// <typeparam name="T"></typeparam>
         /// <param name="root"></param>
         /// <returns></returns>
-       
+
         #endregion
 
 
@@ -244,7 +278,7 @@ namespace BinaryTreeExamples
         /// <param name="root"></param>
         /// <param name="currentTreeLevel"></param>
         /// <returns></returns>
-     
+
 
         /// <summary>
         /// פעולה המקבלת שורש עץ, את הרמה שאליה נרצה להגיע והרמה הנוכחית בה אנו נמצאים
@@ -255,7 +289,7 @@ namespace BinaryTreeExamples
         /// <param name="targetTreeLevel">הרמה המבוקשת</param>
         /// <param name="currentLevel"> הרמה הנוכחית בעץ</param>
         /// <returns></returns>
-       
+
         #endregion
 
         #endregion
@@ -271,7 +305,7 @@ namespace BinaryTreeExamples
         /// <typeparam name="T"></typeparam>
         /// <param name="root"></param>
         /// <returns></returns>
-      
+
 
         #region פעולות עזר
         /// <summary>
@@ -284,7 +318,7 @@ namespace BinaryTreeExamples
         /// <param name="root"></param>
         /// <param name="treeLevels"></param>
         /// <param name="currentLevel"></param>
-      
+
 
         /// <summary>
         /// מציאת מקסימום במערך.
@@ -294,18 +328,18 @@ namespace BinaryTreeExamples
         /// </summary>
         /// <param name="treeLevels"></param>
         /// <returns></returns>
-      
+
         #endregion
         #endregion
 
         #region Binary Search Tree
 
         #region הוספת ערך לעץ חיפוש
-       
+
         #endregion
 
         #region מקסימום/מינימום בעץ חיפוש
-       
+
         #endregion
 
         #region האם עץ חיפוש
@@ -316,34 +350,34 @@ namespace BinaryTreeExamples
         /// </summary>
         /// <param name="t"></param>
         /// <returns></returns>
-      
-
-        
 
 
-       
+
+
+
+
         #endregion
 
         #region מצא הורה בעץ חיפוש
-       
-            #endregion
 
-            #region מחיקת ערך בעץ חיפוש
-            //            The node has no children(it's a leaf node). You can delete it. ...
-            //The node has just one child.To delete the node, replace it with that child. ...
-            //The node has two children.In this case, find the MAX in the LEFT Side of the node. (or MIN of the RIGHT SIDE OF THE NODE)
+        #endregion
 
-          }
+        #region מחיקת ערך בעץ חיפוש
+        //            The node has no children(it's a leaf node). You can delete it. ...
+        //The node has just one child.To delete the node, replace it with that child. ...
+        //The node has two children.In this case, find the MAX in the LEFT Side of the node. (or MIN of the RIGHT SIDE OF THE NODE)
 
-
-               
+    }
 
 
-                #endregion
-                #endregion
 
-            
-       
+
+
+    #endregion
+    #endregion
+
+
+
 
 
 
