@@ -199,7 +199,7 @@ namespace BinaryTreeExamples
 
         public static char IncrementLetter(char ch)
         {
-            return (char)((ch + 1 - 'a') % ('z' -'a') + 'a');
+            return (char)((ch + 1 - 'a') % ('z' - 'a') + 'a');
         }
 
         /// <summary>
@@ -221,6 +221,33 @@ namespace BinaryTreeExamples
         /// <param name="root"></param>
         /// <returns></returns>
 
+
+        //24
+        public static bool IsParentToOnlyChild<T>(BinNode<T> root)
+        {
+            if(root == null) return false;
+            return (root.HasLeft() || root.HasRight()) && !(root.HasLeft() && root.HasRight());
+        }
+
+        public static int CountOnlyChildren<T>(BinNode<T> root)
+        {
+            if(root == null) return 0;
+            int value = 0;
+            if (IsParentToOnlyChild(root)) value = 1;
+
+            return value + CountOnlyChildren(root.GetLeft()) + CountOnlyChildren(root.GetRight());
+        }
+
+        public static int CountOnlyChildrenWithOnlychildren(BinNode<int> root)
+        {
+            if (root == null) return 0;
+            int value = 0;
+            if (IsParentToOnlyChild(root) && (IsParentToOnlyChild(root.GetRight()) || IsParentToOnlyChild(root.GetLeft())))
+                value = 1;
+
+            return value + CountOnlyChildren(root.GetLeft()) + CountOnlyChildren(root.GetRight());
+        }
+        
         #endregion
 
 

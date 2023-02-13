@@ -4,12 +4,50 @@ namespace BinaryTreeExamples
 {
     class Program
     {
-       
+        public static int Multiple(int[] arr)
+        {
+            int multiple = 1;
+            for (int i = 0; i < arr.Length; i++)
+            {
+                multiple *= arr[i];
+            }
+            return multiple;
+        }
+        public static int[] findmaxakdad()
+        {
+            int[] bigNums = { 5, 6, 7, 8, 9 };
+            int[] smallNums = { 0, 1, 2, 3, 4 };
+            int max = 0;
+            int[] maxArr = {};
+
+            int[] arr = new int[5];
+            for (int i = 0; i < 5; i++) 
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    arr[j] = 10 * bigNums[j] + smallNums[(j + i) % 5];
+                    Console.Write(arr[j] + " ");                    
+                }
+                int m = Multiple(arr);
+                if(m > max)
+                {
+                    max = m;
+                    maxArr = arr;
+                }    
+                Console.WriteLine();
+            }
+            for (int i = 0; i < maxArr.Length; i++)
+            {
+                Console.WriteLine(maxArr[i]);
+            }
+            return maxArr;
+        }
         static void Main(string[] args)
         {
-            Console.WriteLine(BTHelper.IncrementLetter('a'));
-            Console.WriteLine(BTHelper.IncrementLetter('x'));
-            Console.WriteLine(BTHelper.IncrementLetter('z'));
+            findmaxakdad();
+            //Console.WriteLine(BTHelper.IncrementLetter('a'));
+            //Console.WriteLine(BTHelper.IncrementLetter('x'));
+            //Console.WriteLine(BTHelper.IncrementLetter('z'));
 
 
             //  BinNode<int> root = new BinNode<int>(54);
