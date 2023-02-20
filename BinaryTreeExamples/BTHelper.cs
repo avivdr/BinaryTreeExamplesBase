@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+//using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using DataStructureCore;
@@ -247,6 +247,67 @@ namespace BinaryTreeExamples
 
             return value + CountOnlyChildren(root.GetLeft()) + CountOnlyChildren(root.GetRight());
         }
+
+        //38
+        public static void PrintLevel<T>(BinNode<T> root, int level)
+        {
+            if (root == null)
+                return;
+            Queue<int> levelQ = new Queue<int>();
+            Queue<BinNode<T>> q = new Queue<BinNode<T>>();
+            q.Insert(root);
+            levelQ.Insert(0);
+            while (!q.IsEmpty() && levelQ.Head() <= level)
+            {
+                BinNode<T> node = q.Remove();
+                int l = levelQ.Remove();
+
+                if (l == level)
+                    Console.WriteLine(node.GetValue());
+                if (root.HasLeft())
+                {
+                    q.Insert(root.GetLeft());
+                    levelQ.Insert(l + 1);
+                }
+                if (root.HasRight())
+                {
+                    q.Insert(root.GetRight());
+                    levelQ.Insert(l + 1);
+                }
+            }
+        }
+
+        public static int LevelDifference<T>(BinNode<T> root, T x, T y)
+        {
+            int xLevel = -1;
+            int yLevel = -1;
+            Queue<BinNode<T>> q = new Queue<BinNode<T>>();
+            Queue<int> level = new Queue<int>();
+            q.Insert(root);
+            level.Insert(0);
+            while (!q.IsEmpty() && (xLevel == -1 || yLevel == -1))
+            {
+                BinNode<T> node = q.Remove();
+                int l = level.Remove();
+                if (node.GetValue().Equals(x))
+                    xLevel = l;
+                if (node.GetValue().Equals(y))
+                    yLevel = l;
+
+                if (root.HasLeft())
+                {
+                    q.Insert(root.GetLeft());
+                    level.Insert(l + 1);
+                }
+                if (root.HasRight())
+                {
+                    q.Insert(root.GetRight());
+                    level.Insert(l + 1);
+                }
+            }
+
+            return xLevel - yLevel;
+        }
         
         #endregion
 
@@ -310,7 +371,22 @@ namespace BinaryTreeExamples
         /// <typeparam name="T"></typeparam>
         /// <param name="root"></param>
         /// <returns></returns>
+        public static int[] Breadth<T>(BinNode<T> root)
+        {
+            int[] arr = { 0, 0 };
+            Queue<BinNode<T>> q = new Queue<BinNode<T>>();
+            Queue<int> levelQ = new Queue<int>();
+            q.Insert(root);
+            levelQ.Insert(0);
 
+            while (!q.IsEmpty())
+            {
+                BinNode<T> node = q.Remove();
+                int level = levelQ.Remove();
+
+                if()
+            }
+        }
         #endregion
 
 

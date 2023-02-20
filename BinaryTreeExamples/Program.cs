@@ -44,6 +44,10 @@ namespace BinaryTreeExamples
         }
         static void Main(string[] args)
         {
+            int a = 0;
+            Console.WriteLine(
+            1/(1/double.Epsilon)  );
+            Console.WriteLine(Math.Cos(double.MaxValue));
             findmaxakdad();
             //Console.WriteLine(BTHelper.IncrementLetter('a'));
             //Console.WriteLine(BTHelper.IncrementLetter('x'));
