@@ -44,11 +44,19 @@ namespace BinaryTreeExamples
         }
         static void Main(string[] args)
         {
-            int a = 0;
-            Console.WriteLine(
-            1/(1/double.Epsilon)  );
-            Console.WriteLine(Math.Cos(double.MaxValue));
-            findmaxakdad();
+            BinNode<int> root = BTHelper.CreateRandomTree(5, 0, 1);
+            Console.WriteLine(root);
+            Console.WriteLine();
+            Console.WriteLine(BTHelper.HeightOfTree<int>(root));
+            //Console.WriteLine(BTHelper.BreadthOfLevel<int>(root, 4));
+            int[] arr = BTHelper.Breadth<int>(root);
+            Console.WriteLine(arr[0]);
+            Console.WriteLine(arr[1]);
+            //int a = 0;
+            //Console.WriteLine(
+            //1/(1/double.Epsilon)  );
+            //Console.WriteLine(Math.Cos(double.MaxValue));
+            //findmaxakdad();
             //Console.WriteLine(BTHelper.IncrementLetter('a'));
             //Console.WriteLine(BTHelper.IncrementLetter('x'));
             //Console.WriteLine(BTHelper.IncrementLetter('z'));

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 //using System.Collections.Generic;
 using System.Text;
 using System.Threading;
@@ -308,6 +309,22 @@ namespace BinaryTreeExamples
 
             return xLevel - yLevel;
         }
+
+        public static bool IsMeirTree(BinNode<int> root)
+        {
+            if (root == null) return false;
+            if(IsLeaf<int>(root)) return true;
+            if(!root.HasLeft() || !root.HasRight()) return false;
+
+            return Math.Abs(root.GetLeft().GetValue() - root.GetRight().GetValue()) <= 2 
+                && IsMeirTree(root.GetLeft()) && IsMeirTree(root.GetRight());
+        }
+
+        public static bool IsBalancedTree<T>(BinNode<T> root)
+        {
+            if (root == null) return false;
+            return CountTreeNodes(root.GetRight()) == CountTreeNodes(root.GetLeft());
+        }
         
         #endregion
 
@@ -321,6 +338,11 @@ namespace BinaryTreeExamples
         /// <typeparam name="T"></typeparam>
         /// <param name="root"></param>
         /// <returns></returns>
+        public static int HeightOfTree<T>(BinNode<T> root)
+        {
+            if (root == null) return 0;
+            return Math.Max(HeightOfTree(root.GetLeft()), HeightOfTree(root.GetRight())) + 1;
+        }
 
         #endregion
 
@@ -374,18 +396,16 @@ namespace BinaryTreeExamples
         public static int[] Breadth<T>(BinNode<T> root)
         {
             int[] arr = { 0, 0 };
-            Queue<BinNode<T>> q = new Queue<BinNode<T>>();
-            Queue<int> levelQ = new Queue<int>();
-            q.Insert(root);
-            levelQ.Insert(0);
-
-            while (!q.IsEmpty())
+            for (int i = 0; i < HeightOfTree(root); i++)
             {
-                BinNode<T> node = q.Remove();
-                int level = levelQ.Remove();
-
-                if()
+                int breadth = BreadthOfLevel(root, i);
+                if (breadth > arr[1])
+                {
+                    arr[1] = breadth;
+                    arr[0] = i;
+                }
             }
+            return arr;
         }
         #endregion
 
@@ -398,17 +418,38 @@ namespace BinaryTreeExamples
         /// <param name="root"></param>
         /// <param name="currentTreeLevel"></param>
         /// <returns></returns>
+        public static int BreadthOfLevel<T>(BinNode<T> root, int targetLevel)
+        {
+            int counter = 0;
 
+        Queue<BinNode<T>> q = new Queue<BinNode<T>>();
+        Queue<int> levelQ = new Queue<int>();
+        q.Insert(root);
+            levelQ.Insert(0);
 
-        /// <summary>
-        /// פעולה המקבלת שורש עץ, את הרמה שאליה נרצה להגיע והרמה הנוכחית בה אנו נמצאים
-        /// הפעולה תחזיר את כמות הצמתים ברמה המבוקשת
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="root"></param>
-        /// <param name="targetTreeLevel">הרמה המבוקשת</param>
-        /// <param name="currentLevel"> הרמה הנוכחית בעץ</param>
-        /// <returns></returns>
+            while (!q.IsEmpty())
+            {
+                BinNode<T> node = q.Remove();
+        int level = levelQ.Remove();
+
+                if (level == targetLevel)
+                    counter++;
+                if (level <= targetLevel)
+                {
+                    if (root.HasLeft())
+                    {
+                        q.Insert(root.GetLeft());
+                        levelQ.Insert(level + 1);
+                    }
+                    if (root.HasRight())
+                    {
+                        q.Insert(root.GetRight());
+                        levelQ.Insert(level + 1);
+                    }
+                }                
+            }
+            return counter;
+        }
 
         #endregion
 
