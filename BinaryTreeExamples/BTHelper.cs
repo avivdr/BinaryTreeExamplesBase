@@ -252,8 +252,7 @@ namespace BinaryTreeExamples
         //38
         public static void PrintLevel<T>(BinNode<T> root, int level)
         {
-            if (root == null)
-                return;
+            if (root == null) return;
             Queue<int> levelQ = new Queue<int>();
             Queue<BinNode<T>> q = new Queue<BinNode<T>>();
             q.Insert(root);
@@ -265,6 +264,7 @@ namespace BinaryTreeExamples
 
                 if (l == level)
                     Console.WriteLine(node.GetValue());
+
                 if (root.HasLeft())
                 {
                     q.Insert(root.GetLeft());
@@ -349,6 +349,61 @@ namespace BinaryTreeExamples
             if (root == null) return false;
             if (IsLeaf(root)) return false;
             return IsZigzag(root.GetLeft(), true) && IsZigzag(root.GetRight(), false);
+        }
+
+        public static bool IsBreadthSorted(BinNode<int> root)
+        {
+            if (root == null) return true;
+            Queue<int> levelQ = new Queue<int>();
+            Queue<BinNode<int>> q = new Queue<BinNode<int>>();
+            levelQ.Insert(0);
+            q.Insert(root);
+
+            int currLevel = 0;
+            int prevSum = 0;
+            int currSum = 0;
+            while (!q.IsEmpty())
+            {
+                BinNode<int> node = q.Remove();
+                int level = levelQ.Remove();
+
+                if (level == currLevel)
+                    currSum += node.GetValue();
+                if (level > currLevel)
+                {
+                    if (currSum <= prevSum) return false;
+
+                    currLevel++;
+                    prevSum = currSum;
+                    currSum = node.GetValue();
+                }
+
+                if (node.HasLeft())
+                {
+                    q.Insert(node.GetLeft());
+                    levelQ.Insert(level + 1);
+                }
+                if (node.HasRight())
+                {
+                    q.Insert(node.GetRight());
+                    levelQ.Insert(level + 1);
+                }
+            }
+            return true;
+        }
+
+        public static bool IsBoserTree(BinNode<int> root)
+        {
+            if (root == null) return false;
+            if(IsLeaf(root)) return true;
+
+            if (!root.HasLeft() || !root.HasRight()) 
+                return false;
+            int left = root.GetLeft().GetValue();
+            int right = root.GetRight().GetValue();
+            if (!(right > left && left > root.GetValue()))
+                return false;
+            return IsBoserTree(root.GetLeft()) && IsBoserTree(root.GetRight());
         }
 
         #endregion
