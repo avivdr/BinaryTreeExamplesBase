@@ -325,7 +325,32 @@ namespace BinaryTreeExamples
             if (root == null) return false;
             return CountTreeNodes(root.GetRight()) == CountTreeNodes(root.GetLeft());
         }
-        
+
+        public static bool IsZigzag<T>(BinNode<T> root, bool isLeft)
+        {
+            if (IsLeaf(root)) return true;
+            bool left = false, right = false, returnVal = true;
+            if (isLeft)            
+                right = root.HasRight();            
+            else
+                left = root.HasLeft();
+
+            if (root.HasLeft())
+                returnVal &= IsZigzag(root.GetLeft(), true);
+            if (root.HasRight())
+                returnVal &= IsZigzag(root.GetRight(), false);
+
+            //return returnVal && (right ^ left);
+            return returnVal && (right || left);
+        }
+
+        public static bool IsZigzag<T>(BinNode<T> root)
+        {
+            if (root == null) return false;
+            if (IsLeaf(root)) return false;
+            return IsZigzag(root.GetLeft(), true) && IsZigzag(root.GetRight(), false);
+        }
+
         #endregion
 
 
