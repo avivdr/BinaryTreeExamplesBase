@@ -278,6 +278,33 @@ namespace BinaryTreeExamples
             }
         }
 
+        public static void BreadthOrder<T>(BinNode<T> root)
+        {
+            if (root == null) return;
+            Queue<int> levelQ = new Queue<int>();
+            Queue<BinNode<T>> q = new Queue<BinNode<T>>();
+            q.Insert(root);
+            levelQ.Insert(0);
+            while (!q.IsEmpty())
+            {
+                BinNode<T> node = q.Remove();
+                int level = levelQ.Remove();
+
+                //something
+
+                if (root.HasLeft())
+                {
+                    q.Insert(root.GetLeft());
+                    levelQ.Insert(level + 1);
+                }
+                if (root.HasRight())
+                {
+                    q.Insert(root.GetRight());
+                    levelQ.Insert(level + 1);
+                }
+            }
+        }
+
         public static int LevelDifference<T>(BinNode<T> root, T x, T y)
         {
             int xLevel = -1;
