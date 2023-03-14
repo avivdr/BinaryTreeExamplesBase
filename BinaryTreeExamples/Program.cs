@@ -44,14 +44,29 @@ namespace BinaryTreeExamples
         }
         static void Main(string[] args)
         {
-            BinNode<int> root = BTHelper.CreateRandomTree(5, 0, 1);
-            Console.WriteLine(root);
-            Console.WriteLine();
-            Console.WriteLine(BTHelper.HeightOfTree<int>(root));
-            //Console.WriteLine(BTHelper.BreadthOfLevel<int>(root, 4));
-            int[] arr = BTHelper.Breadth<int>(root);
-            Console.WriteLine(arr[0]);
-            Console.WriteLine(arr[1]);
+            string str = "jgjsf";
+            Console.WriteLine(str.Remove(str.Length - 1));
+
+            //BinNode<int> root = BTHelper.CreateRandomTree(1, 1, 9);
+            //Console.WriteLine(root);
+            //Console.WriteLine();
+            //BTHelper.PrintAll(root);
+
+            BinNode<int> t1 = BTHelper.CreateRandomTree(2, 0, 10);
+            BinNode<int> t2 = BTHelper.CreateRandomTree(2, 0, 10);
+            Console.WriteLine(t1);
+            Console.WriteLine(t2);
+            Node<int> l = BTHelper.Check(t1, t2);
+            Console.WriteLine(l);
+
+            //BinNode<int> root = BTHelper.CreateRandomTree(5, 0, 1);
+            //Console.WriteLine(root);
+            //Console.WriteLine();
+            //Console.WriteLine(BTHelper.HeightOfTree<int>(root));
+            ////Console.WriteLine(BTHelper.BreadthOfLevel<int>(root, 4));
+            //int[] arr = BTHelper.Breadth<int>(root);
+            //Console.WriteLine(arr[0]);
+            //Console.WriteLine(arr[1]);
             //int a = 0;
             //Console.WriteLine(
             //1/(1/double.Epsilon)  );
