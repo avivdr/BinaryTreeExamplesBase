@@ -433,6 +433,78 @@ namespace BinaryTreeExamples
             return IsBoserTree(root.GetLeft()) && IsBoserTree(root.GetRight());
         }
 
+        public static bool IsOmegaTree(BinNode<int> root)
+        {
+            if (root == null) return false;
+            if (IsLeaf(root)) return true;
+            if (!root.HasLeft() || !root.HasRight()) return false;
+            return root.GetValue() <= Sum(root.GetLeft()) && root.GetValue() >= Sum(root.GetRight()) 
+                && IsOmegaTree(root.GetLeft()) && IsOmegaTree(root.GetRight());
+        }
+
+        public static int Sum(BinNode<int> root)
+        {
+            if (root == null) return 0;
+            return root.GetValue() + Sum(root.GetLeft()) + Sum(root.GetRight());
+        }
+
+        public static bool WordFromRoot(BinNode<char> tree, string str)
+        {
+            if (tree == null) return true;
+            if (str == "") return true;
+            if (tree.GetValue() != str[0]) return false;
+            return WordFromRoot(tree.GetLeft(), str.Remove(str.Length - 1)) || WordFromRoot(tree.GetRight(), str.Remove(str.Length - 1));
+        }
+
+        public static void PrintAll(BinNode<int> tree)
+        {
+            if (tree == null) return;
+            PrintAll(tree, "");
+        }
+        public static void PrintAll(BinNode<int> tree, string st)
+        {            
+            st += tree.GetValue();
+            if (IsLeaf(tree))
+            {
+                Console.WriteLine(st);
+            }
+            else
+            {
+                if (tree.HasLeft())
+                    PrintAll(tree.GetLeft(), st);
+                if (tree.HasRight())
+                    PrintAll(tree.GetRight(), st);
+            }   
+        }
+
+        public static bool Exist(BinNode<int> t, int x)
+        {
+            if (t == null) return false;
+            if (t.GetValue() == x) return true;
+            return Exist(t.GetLeft(), x) || Exist(t.GetRight(), x);
+        }
+
+        public static Node<int> Check(BinNode<int> t1, BinNode<int> t2)
+        {
+            Node<int> first = new Node<int>(-1);
+            first = Check(t1, t2, first);
+            return first.GetNext();
+        }
+
+        public static Node<int> Check(BinNode<int> t1, BinNode<int> t2, Node<int> list)
+        {
+            if (t1 == null) return null;
+            if (!Exist(t2, t1.GetValue()))
+            {
+                Node<int> next = list.GetNext();
+                list.SetNext(new Node<int>(t1.GetValue()));
+                list.GetNext().SetNext(next);
+            }
+            Check(t1.GetLeft(), t2, list);
+            Check(t1.GetRight(), t2, list);
+            return list;
+        }
+
         #endregion
 
 
